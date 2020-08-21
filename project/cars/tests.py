@@ -66,4 +66,9 @@ class TestCarsEndpoint(TestCase):
         self.assertEqual(asserted_response_data,
             response.data)
 
-
+    def test_cars_get_request__succeed(self):
+        c = APIClient()
+        endpoint = '/cars/'
+        asserted_code = 200
+        response = c.get(endpoint)
+        self.assertEqual(asserted_code, response.status_code)

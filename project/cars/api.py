@@ -4,6 +4,7 @@ from rest_framework import status
 
 from .serializers import CarSerializer
 from .requests import ModelListRequest, ModelListRequestError
+from .models import Car
 
 
 class CarsAPIView(APIView):
@@ -19,3 +20,8 @@ class CarsAPIView(APIView):
             return Response(str(e), status=status.HTTP_404_NOT_FOUND)
 
         return Response(model_dict, status=status.HTTP_200_OK)
+
+    def get(self, request, format=None):
+        queryset = Car.objects.all()
+        return Response(queryset, status=status.HTTP_200_OK)
+
