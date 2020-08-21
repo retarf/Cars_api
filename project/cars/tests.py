@@ -67,8 +67,23 @@ class TestCarsEndpoint(TestCase):
             response.data)
 
     def test_cars_get_request__succeed(self):
-        c = APIClient()
+        request_data = {
+            'make': 'honda',
+            'model': 'CBX'
+        }
+        asserted_response_data = [{
+            "id": 1,
+            "make_id": 474,
+            "make": "HONDA",
+            "model_id": 27546,
+            "model": "CBX"
+        }]
         endpoint = '/cars/'
+        c = APIClient()
+        c.post(endpoint, data=request_data)
+
         asserted_code = 200
         response = c.get(endpoint)
         self.assertEqual(asserted_code, response.status_code)
+        self.assertEqual(asserted_response_data,
+            response.json())

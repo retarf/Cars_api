@@ -10,16 +10,22 @@ from .models import Car
 class CarsAPIView(APIView):
 
     def post(self, request, format=None):
-        car_serializer = CarSerializer(data=request.data)
         make = request.data['make']
         model = request.data['model']
         try:
             model_list_request = ModelListRequest(make)
             model_dict = model_list_request.get_car_make_model(model)
+            car = Car(
+                make_id = model_dict['Make_ID'],
+                make = model_dict['Make_Name'],
+                model_id = model_dict['Model_ID'],
+                model = model_dict['Model_Name'],
+                )
+            car.save()
         except ModelListRequestError as e:
             return Response(str(e), status=status.HTTP_404_NOT_FOUND)
 
-        return Response(model_dict, status=status.HTTP_200_OK)
+        return Response(model_dict, status=status.HTTP_201_CREATED)
 
     def get(self, request, format=None):
         queryset = Car.objects.all()
