@@ -23,5 +23,6 @@ class CarsAPIView(APIView):
 
     def get(self, request, format=None):
         queryset = Car.objects.all()
-        return Response(queryset, status=status.HTTP_200_OK)
+        car_serializer = CarSerializer(queryset, many=True)
+        return Response(car_serializer.data, status=status.HTTP_200_OK)
 
