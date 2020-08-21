@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import IntegrityError
 
 from .serializers import CarSerializer
 from .requests import ModelListRequest, ModelListRequestError
@@ -24,6 +25,8 @@ class CarsAPIView(APIView):
             car.save()
         except ModelListRequestError as e:
             return Response(str(e), status=status.HTTP_404_NOT_FOUND)
+        except IntegrityError:
+            return Response('Record already exists', status=status.HTTP_403_FORBIDDEN)
 
         return Response(model_dict, status=status.HTTP_201_CREATED)
 
