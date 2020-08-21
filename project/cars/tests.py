@@ -1,4 +1,5 @@
 from django.test import TestCase
+from rest_framework.test import APIClient
 
 from .requests import ModelListRequest
 from .requests import ModelListRequestError
@@ -43,5 +44,26 @@ class TestModelListRequestMethods(TestCase):
         model_list = ModelListRequest(f'{car_make}')
         self.assertRaises(ModelListRequestError,
             model_list.get_car_make_model, model_name)
+
+class TestCarsEndpoint(TestCase):
+
+    def test_cars_post_request__succeed(self):
+        request_data = {
+            'make': 'honda',
+            'model': 'CBX'
+        }
+        asserted_response_data = {
+            "Make_ID": 474,
+            "Make_Name": "HONDA",
+            "Model_ID": 27546,
+            "Model_Name":"CBX"
+        }
+        asserted_code = 201
+        endpoint = '/cars/'
+        c = APIClient()
+        response = c.post(endpoint, data=request_data)
+        self.assertEqual(asserted_code, response.status_code)
+        self.assertEqual(asserted_response_data,
+            response.data)
 
 
