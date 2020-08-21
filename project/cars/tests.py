@@ -66,6 +66,28 @@ class TestCarsEndpoint(TestCase):
         self.assertEqual(asserted_response_data,
             response.data)
 
+    def test_cars_post_request__fail__wrong_model(self):
+        request_data = {
+            'make': 'honda',
+            'model': 'CB'
+        }
+        asserted_code = 404
+        endpoint = '/cars/'
+        c = APIClient()
+        response = c.post(endpoint, data=request_data)
+        self.assertEqual(asserted_code, response.status_code)
+
+    def test_cars_post_request__fail__wrong_make(self):
+        request_data = {
+            'make': 'honey',
+            'model': 'CBX'
+        }
+        asserted_code = 404
+        endpoint = '/cars/'
+        c = APIClient()
+        response = c.post(endpoint, data=request_data)
+        self.assertEqual(asserted_code, response.status_code)
+
     def test_cars_get_request__succeed(self):
         request_data = {
             'make': 'honda',
