@@ -1,3 +1,26 @@
 from django.test import TestCase
 
-# Create your tests here.
+from .requests import ModelListRequest
+
+class TestModelListRequestMethods(TestCase):
+
+    def test_url(self):
+        car_make = 'honda'
+        models = ModelListRequest(f'{car_make}')
+        asserted_url = f'https://vpic.nhtsa.dot.gov/api' \
+            f'/vehicles/GetModelsForMake/{car_make}?format=json'
+        self.assertEqual(asserted_url, models.url)
+
+    def test_get_car_model_list(self):
+        ''' This test check 10-th element of the list '''
+        car_make = 'honda'
+        asserted_list_element = {
+            'Make_ID': 474,
+            'Make_Name': 'HONDA',
+            'Model_ID': 2128,
+            'Model_Name': 'CR-Z'
+            }
+        list_element = ModelListRequest(f'{car_make}').get_car_make_model_list()[10]
+        self.assertEqual(asserted_list_element, list_element)
+
+
