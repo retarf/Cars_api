@@ -5,6 +5,6 @@ from cars.models import Car
 
 
 class RateModel(models.Model):
-    car = models.ManyToManyField(Car)
-    rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    rate = models.IntegerField(validators=[MinValueValidator(1),
+        MaxValueValidator(5)])
