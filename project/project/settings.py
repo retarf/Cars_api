@@ -20,7 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-5(em8wc6#d8&mu+23z+t3e%o2o+_zct)+xfrjh4e0b7o_m%21'
+#SECRET_KEY = '-5(em8wc6#d8&mu+23z+t3e%o2o+_zct)+xfrjh4e0b7o_m%21'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'testserver',
     '*',
+    'ldcarapp.herokuapp.com',
     ]
 
 
@@ -129,3 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
