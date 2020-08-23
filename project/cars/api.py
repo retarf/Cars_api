@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import IntegrityError
+from django.db.models import Avg
 
 from .serializers import CarSerializer
 from .requests import ModelListRequest, ModelListRequestError
@@ -31,7 +32,6 @@ class CarsAPIView(APIView):
         return Response(model_dict, status=status.HTTP_201_CREATED)
 
     def get(self, request, format=None):
-        queryset = Car.objects.all()
-        car_serializer = CarSerializer(queryset, many=True)
-        return Response(car_serializer.data, status=status.HTTP_200_OK)
+        cars = Car.objects.values('id').annotate(average_rate=Avg('ratemodel__rate'))
+        return Response(cars, status=status.HTTP_200_OK)
 

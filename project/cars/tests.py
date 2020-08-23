@@ -105,19 +105,30 @@ class TestCarsEndpoint(TestCase):
             'make': 'honda',
             'model': 'CBX'
         }
-        asserted_response_data = [{
-            "id": 1,
-            "make_id": 474,
-            "make": "HONDA",
-            "model_id": 27546,
-            "model": "CBX"
-        }]
         endpoint = '/cars/'
         c = APIClient()
-        c.post(endpoint, data=request_data)
+        response = c.post(endpoint, data=request_data)
+        asserted_code = 201
+        self.assertEqual(asserted_code, response.status_code)
 
-        asserted_code = 200
+        endpoint = '/rate/'
+        rates = [3, 5, 1]
+        for r in rates:
+            request_data = {
+                "car_id": 1,
+                "rate": r
+            }
+            response = c.post(endpoint, data=request_data)
+            self.assertEqual(asserted_code, response.status_code)
+
+        endpoint = '/cars/'
         response = c.get(endpoint)
+        asserted_average = 3.0
+        asserted_code = 200
+        asserted_response_data = [{
+            "id": 1,
+            "average_rate": asserted_average
+            }]
         self.assertEqual(asserted_code, response.status_code)
         self.assertEqual(asserted_response_data,
             response.json())
