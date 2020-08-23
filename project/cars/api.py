@@ -24,6 +24,7 @@ class CarsAPIView(APIView):
                 model = model_dict['Model_Name'],
                 )
             car.save()
+            model_dict['id'] = car.id
         except ModelListRequestError as e:
             return Response(str(e), status=status.HTTP_404_NOT_FOUND)
         except IntegrityError:

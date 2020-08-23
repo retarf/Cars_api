@@ -32,7 +32,7 @@ class TestModelListRequestMethods(TestCase):
             'Make_ID': 474,
             'Make_Name': 'HONDA',
             'Model_ID': 27546,
-            'Model_Name': 'CBX'
+            'Model_Name': 'CBX',
             }
         model_list = ModelListRequest(f'{car_make}')
         model_dict = model_list.get_car_make_model(model_name)
@@ -56,12 +56,13 @@ class TestCarsEndpoint(TestCase):
             "Make_ID": 474,
             "Make_Name": "HONDA",
             "Model_ID": 27546,
-            "Model_Name":"CBX"
+            "Model_Name":"CBX",
         }
         asserted_code = 201
         endpoint = '/cars/'
         c = APIClient()
         response = c.post(endpoint, data=request_data)
+        asserted_response_data['id'] = response.data['id']
         self.assertEqual(asserted_code, response.status_code)
         self.assertEqual(asserted_response_data,
             response.data)
