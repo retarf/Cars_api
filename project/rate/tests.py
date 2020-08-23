@@ -16,15 +16,17 @@ class TestRateEndpoint(TestCase):
         c = APIClient()
         response = c.post(endpoint, data=car)
         self.assertEqual(asserted_code, response.status_code)
+        car_id = response.data["id"]
 
+        c = APIClient()
         endpoint = '/rate/'
         data = {
-            "car_id": 1,
+            "car_id": car_id,
             "rate": 1
         }
         asserted_response_data = {
-            "car_id":1,
-            "rate":1
+            "car_id": car_id,
+            "rate": 1
             }
         response = c.post(endpoint, data=data)
         self.assertEqual(asserted_code, response.status_code)
