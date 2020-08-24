@@ -33,6 +33,6 @@ class CarsAPIView(APIView):
         return Response(model_dict, status=status.HTTP_201_CREATED)
 
     def get(self, request, format=None):
-        cars = Car.objects.values('id').annotate(average_rate=Avg('ratemodel__rate'))
+        cars = Car.objects.values().annotate(average_rate=Avg('ratemodel__rate'))
         return Response(cars, status=status.HTTP_200_OK)
 

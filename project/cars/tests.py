@@ -111,12 +111,13 @@ class TestCarsEndpoint(TestCase):
         response = c.post(endpoint, data=request_data)
         asserted_code = 201
         self.assertEqual(asserted_code, response.status_code)
+        car_id = response.data['id']
 
         endpoint = '/rate/'
         rates = [3, 5, 1]
         for r in rates:
             request_data = {
-                "car_id": 1,
+                "car_id": car_id,
                 "rate": r
             }
             response = c.post(endpoint, data=request_data)
@@ -127,7 +128,11 @@ class TestCarsEndpoint(TestCase):
         asserted_average = 3.0
         asserted_code = 200
         asserted_response_data = [{
-            "id": 1,
+            "id": car_id,
+            'make': 'HONDA',
+            'make_id': 474,
+            'model': 'CBX',
+            'model_id': 27546,
             "average_rate": asserted_average
             }]
         self.assertEqual(asserted_code, response.status_code)
