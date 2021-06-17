@@ -5,3 +5,4 @@ ipython
 ipdb
 gunicorn
 django-heroku
+django-environ
