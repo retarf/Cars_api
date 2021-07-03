@@ -9,6 +9,9 @@ How to run:
 -----------
     git clone https://github.com/retarf/carapp
     cd carapp
+    create .env file (you can use env.example file as example)
+    docker-compose run web python manage.py makemigrations
+    docker-compose run web python manage.py migrate
     docker-compose up
 
 -----------
@@ -29,7 +32,8 @@ Requirements:
 * psycopg2==2.8.5
 * django-rest-framework
 * gunicorn
-* django-heroku
+* django-environ
+* whitenoise
 
 -------------
 
