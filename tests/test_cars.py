@@ -1,5 +1,6 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
+from unittest.mock import patch
 
 from cars.requests import ModelListRequest
 from cars.requests import ModelListRequestError
@@ -166,6 +167,19 @@ class TestCarsEndpoint(TestCase):
             ]
         }
         data = {}
+
+        c = APIClient()
+        endpoint = '/cars'
+        response = c.post(endpoint, data=data)
+        self.assertEqual(expected_code, response.status_code)
+        self.assertEqual(expected_content, response.data)
+
+    @patch('cars.requests.urllib.request.urlopen')
+    def test_cars_post_request_with_api_error__fail(self, urlopen):
+        expected_content = "test error"
+        urlopen.side_effect = Exception(expected_content)
+        expected_code = 502
+        data = {"make": "Volkswagen", "model": "Golf"}
 
         c = APIClient()
         endpoint = '/cars'

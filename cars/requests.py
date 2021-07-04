@@ -5,6 +5,9 @@ import json
 class ModelListRequestError(Exception):
     MODEL_DOES_NOT_EXISTS = 1
 
+class ApiError(Exception):
+    pass
+
 class ModelListRequest():
     API_URL = 'https://vpic.nhtsa.dot.gov/api'
     ENDPOINT_URL =  '/vehicles/GetModelsForMake/{car_make}?format=json'
@@ -19,8 +22,11 @@ class ModelListRequest():
         return self.API_URL + endpoint_url
 
     def get_car_make_model_list(self) -> list:
-        response = urllib.request.urlopen(self.url)
-        body = response.read()
+        try:
+            response = urllib.request.urlopen(self.url)
+            body = response.read()
+        except Exception as ex:
+            raise ApiError(ex)
 
         return json.loads(body.decode("utf-8"))['Results']
 

@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from django.db.models import Avg
 
 from cars.serializers import CarSerializer, CarFieldsSerializer
-from cars.requests import ModelListRequest, ModelListRequestError
+from cars.requests import ModelListRequest, ModelListRequestError, ApiError
 from cars.models import Car
 
 
@@ -33,6 +33,9 @@ class CarsAPIView(APIView):
             return Response(str(e), status=status.HTTP_404_NOT_FOUND)
         except IntegrityError:
             return Response('Record already exists', status=status.HTTP_403_FORBIDDEN)
+        except ApiError as e:
+            return Response(str(e), status=status.HTTP_502_BAD_GATEWAY)
+
 
         return Response(model_dict, status=status.HTTP_201_CREATED)
 
