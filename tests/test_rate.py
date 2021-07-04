@@ -1,33 +1,21 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 
-from rate.models import RateModel
-
 
 class TestRateEndpoint(TestCase):
-
     def test_rate_post_request__succeed(self):
-        car = {
-            'make': 'honda',
-            'model': 'CBX'
-        }
+        car = {"make": "honda", "model": "CBX"}
         asserted_code = 201
-        endpoint = '/cars/'
+        endpoint = "/cars/"
         c = APIClient()
         response = c.post(endpoint, data=car)
         self.assertEqual(asserted_code, response.status_code)
         car_id = response.data["id"]
 
         c = APIClient()
-        endpoint = '/rate/'
-        data = {
-            "car_id": car_id,
-            "rate": 1
-        }
-        asserted_response_data = {
-            "car_id": car_id,
-            "rate": 1
-            }
+        endpoint = "/rate/"
+        data = {"car_id": car_id, "rate": 1}
+        asserted_response_data = {"car_id": car_id, "rate": 1}
         response = c.post(endpoint, data=data)
         self.assertEqual(asserted_code, response.status_code)
         self.assertEqual(asserted_response_data, response.json())
@@ -38,16 +26,9 @@ class TestRateEndpoint(TestCase):
         car_id = 999
 
         c = APIClient()
-        endpoint = '/rate/'
-        data = {
-            "car_id": car_id,
-            "rate": 1
-        }
-        expected_content = {
-            "car_id": [
-                "Car ID 999 does not exist."
-            ]
-        }
+        endpoint = "/rate/"
+        data = {"car_id": car_id, "rate": 1}
+        expected_content = {"car_id": ["Car ID 999 does not exist."]}
         response = c.post(endpoint, data=data)
         self.assertEqual(expected_code, response.status_code)
         self.assertEqual(expected_content, response.data)
@@ -56,17 +37,13 @@ class TestRateEndpoint(TestCase):
 
         expected_code = 403
         expected_content = {
-            "car_id": [
-                "This field is required."
-            ],
-            "rate": [
-                "This field is required."
-            ]
+            "car_id": ["This field is required."],
+            "rate": ["This field is required."],
         }
         data = {}
 
         c = APIClient()
-        endpoint = '/rate'
+        endpoint = "/rate"
         response = c.post(endpoint, data=data)
         self.assertEqual(expected_code, response.status_code)
         self.assertEqual(expected_content, response.data)

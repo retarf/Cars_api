@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import include, re_path
 
 urlpatterns = [
-    re_path(r'^admin/?', admin.site.urls),
-    re_path(r'^cars/?', include('cars.urls')),
-    re_path(r'^rate/?', include('rate.urls')),
-    re_path(r'^popular/?', include('popular.urls')),
+    re_path(r"^admin/?", admin.site.urls),
+    re_path(r"^cars/?", include("cars.urls")),
+    re_path(r"^rate/?", include("rate.urls")),
+    re_path(r"^popular/?", include("popular.urls")),
 ]

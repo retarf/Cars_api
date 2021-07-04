@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cars', '0001_initial'),
+        ("cars", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='car',
-            name='make_id',
+            model_name="car",
+            name="make_id",
             field=models.IntegerField(default=1),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='car',
-            name='model_id',
+            model_name="car",
+            name="model_id",
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
