@@ -14,7 +14,10 @@ class RateView(APIView):
             try:
                 rate_serializer.save()
             except Car.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+                car_id = rate_serializer.data['car_id']
+                message = f"Car ID {car_id} does not exist."
+                content = {"car_id": [message]}
+                return Response(content, status=status.HTTP_404_NOT_FOUND)
             return Response(rate_serializer.data, status.HTTP_201_CREATED)
         else:
             return Response(rate_serializer.errors, status.HTTP_403_FORBIDDEN)

@@ -34,7 +34,7 @@ class TestRateEndpoint(TestCase):
 
     def test_rate_post_request_with_not_existing_id__fail(self):
 
-        asserted_code = 404
+        expected_code = 404
         car_id = 999
 
         c = APIClient()
@@ -43,5 +43,11 @@ class TestRateEndpoint(TestCase):
             "car_id": car_id,
             "rate": 1
         }
+        expected_content = {
+            "car_id": [
+                "Car ID 999 does not exist."
+            ]
+        }
         response = c.post(endpoint, data=data)
-        self.assertEqual(asserted_code, response.status_code)
+        self.assertEqual(expected_code, response.status_code)
+        self.assertEqual(expected_content, response.data)
