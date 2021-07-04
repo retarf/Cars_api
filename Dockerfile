@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.9-slim
 ENV PYTHONBUFFERED 1 
 COPY requirements.txt .
 RUN apt update \

@@ -26,14 +26,20 @@ Usage:
 
 ------
 
+How to run tests:
+----------------
+    docker-compose run web python manage.py test
+
+----------------
+
 Requirements:
 -------------
-* django==3.0
-* psycopg2==2.8.5
-* django-rest-framework
-* gunicorn
-* django-environ
-* whitenoise
+* django==3.2
+* psycopg2-binary==2.9.1
+* djangorestframework==3.12
+* gunicorn==20.1
+* django-environ-2==2.1
+* whitenoise==5.2
 
 -------------
 
