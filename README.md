@@ -10,9 +10,9 @@ How to run:
     git clone https://github.com/retarf/carapp
     cd carapp
     create .env file (you can use env.example file as example)
-    docker-compose run web python manage.py makemigrations
-    docker-compose run web python manage.py migrate
-    docker-compose up
+    make makemigrations
+    make migrate
+    make up
 
 -----------
 
@@ -28,7 +28,7 @@ Usage:
 
 How to run tests:
 ----------------
-    docker-compose run web python manage.py test
+    make test
 
 ----------------
 
