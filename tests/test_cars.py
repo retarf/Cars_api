@@ -1,8 +1,8 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 
-from .requests import ModelListRequest
-from .requests import ModelListRequestError
+from cars.requests import ModelListRequest
+from cars.requests import ModelListRequestError
 
 class TestModelListRequestMethods(TestCase):
 
