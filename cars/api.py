@@ -4,16 +4,20 @@ from rest_framework import status
 from django.db import IntegrityError
 from django.db.models import Avg
 
-from .serializers import CarSerializer
-from .requests import ModelListRequest, ModelListRequestError
-from .models import Car
+from cars.serializers import CarSerializer, CarFieldsSerializer
+from cars.requests import ModelListRequest, ModelListRequestError
+from cars.models import Car
 
 
 class CarsAPIView(APIView):
 
     def post(self, request, format=None):
-        make = request.data['make']
-        model = request.data['model']
+        fields_serializer = CarFieldsSerializer(data=request.data)
+        if fields_serializer.is_valid():
+            make = fields_serializer.data['make']
+            model = fields_serializer.data['model']
+        else:
+            return Response(fields_serializer.errors, status=status.HTTP_403_FORBIDDEN)
         try:
             model_list_request = ModelListRequest(make)
             model_dict = model_list_request.get_car_make_model(model)

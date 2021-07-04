@@ -101,6 +101,21 @@ class TestCarsEndpoint(TestCase):
         response = c.post(endpoint, data=request_data)
         self.assertEqual(asserted_code, response.status_code)
 
+    def test_cars_post_request__fail__wrong_payload(self):
+        request_data = {"make": "Volkswagen"}
+        asserted_code = 403
+        endpoint = '/cars/'
+        c = APIClient()
+        c.post(endpoint, data=request_data)
+        response = c.post(endpoint, data=request_data)
+        expected_response_data = {
+            "model": [
+                "This field is required."
+            ]
+        }
+        self.assertEqual(asserted_code, response.status_code)
+        self.assertEqual(expected_response_data, response.data)
+
     def test_cars_get_request__succeed(self):
         request_data = {
             'make': 'honda',

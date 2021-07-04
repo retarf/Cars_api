@@ -6,3 +6,8 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = '__all__'
+
+class CarFieldsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = ['make', 'model']
