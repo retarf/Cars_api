@@ -10,7 +10,7 @@ services:
             - .:/project
         ports:
             - "80:8000"
-        command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 project.wsgi"
+        command: bash -c "gunicorn --bind 0.0.0.0:8000 project.wsgi"
 
     db:
         image: postgres
