@@ -153,3 +153,22 @@ class TestCarsEndpoint(TestCase):
         self.assertEqual(asserted_code, response.status_code)
         self.assertEqual(asserted_response_data,
             response.json())
+
+    def test_cars_post_request_without_trailing_slash__succeed(self):
+
+        expected_code = 403
+        expected_content = {
+            "make": [
+                "This field is required."
+            ],
+            "model": [
+                "This field is required."
+            ]
+        }
+        data = {}
+
+        c = APIClient()
+        endpoint = '/cars'
+        response = c.post(endpoint, data=data)
+        self.assertEqual(expected_code, response.status_code)
+        self.assertEqual(expected_content, response.data)

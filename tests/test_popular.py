@@ -73,3 +73,12 @@ class PopularTestCase(TestCase):
         response = c.get(endpoint)
         self.assertEqual(asserted_code, response.status_code)
         self.assertEqual(asserted_list, response.data[:3])
+
+    def test_popular_get_request_without_trailing_slash__succeed(self):
+
+        expected_code = 200
+
+        c = APIClient()
+        endpoint = '/popular'
+        response = c.get(endpoint)
+        self.assertEqual(expected_code, response.status_code)
